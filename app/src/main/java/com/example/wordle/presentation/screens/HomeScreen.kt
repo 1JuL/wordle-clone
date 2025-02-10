@@ -1,32 +1,30 @@
 package com.example.wordle.presentation.screens
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.example.wordle.R
+import com.example.wordle.presentation.components.InfoBodyContent
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Text
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 
 @Composable
 
 fun HomeScreen(){
-    Scaffold (
-    ) { paddingValues ->
+    Scaffold { paddingValues ->
         Column (modifier = Modifier.padding(paddingValues)) {
             LogoHeader()
             InfoBody()
@@ -36,68 +34,51 @@ fun HomeScreen(){
     }
 }
 
-@Preview
 @Composable
-fun  PreviewHomeScreen(){
-    HomeScreen()
-}
-
-@Composable
-fun LogoHeader(){
-    Image(painter = painterResource(id = R.drawable.wordle_logo),
-        contentDescription = "Wordle Logo")
+fun LogoHeader() {
+    Image(
+        painter = painterResource(id = R.drawable.wordle_logo),
+        contentDescription = "Wordle Logo",
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(10.dp, vertical = 35.dp),
+    )
 }
 
 @Composable
 fun InfoBody(){
-    Text(
-        text = "How to play",
-        style = TextStyle(
-            fontWeight = FontWeight.Bold,
-            fontFamily = FontFamily.Serif,
-            fontSize = 24.sp,
-            shadow = Shadow(
-                color = Color.White,
-                offset = Offset(5.0f, 10.0f),
-                blurRadius = 3f
-            )
-        )
-    )
-
-    Spacer(modifier = Modifier.height(20.dp))
-
-    Text(
-        text = "Guess the Wordle in 6 tries",
-        style = TextStyle(
-            fontWeight = FontWeight.Bold,
-        )
-    )
-
-    Spacer(modifier = Modifier.height(20.dp))
-
-    Text(
-        text = " • Each guess must be a valid 5 letter word. ",
-        style = TextStyle(
-            fontWeight = FontWeight.Bold,
-        )
-    )
-
-    Spacer(modifier = Modifier.height(5.dp))
-
-    Text(
-        text = " • The color of the tiles will change to show how close your guess was to the word.",
-        style = TextStyle(
-            fontWeight = FontWeight.Bold,
-        )
-    )
-
-    Spacer(modifier = Modifier.height(20.dp))
-
-
-
+    InfoBodyContent()
 }
 
 @Composable
 fun Buttons(){
+    Column (
+        modifier = Modifier
+            .padding(40.dp)
+            .fillMaxSize(),
+        verticalArrangement = Arrangement.Bottom
+    ){
+        Button(onClick = {},
+            modifier = Modifier.fillMaxWidth(),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = colorResource(id = R.color.green_wordle),
+                contentColor = Color.White
+            )
+        ) {
+            Text("Let's Play!")
+        }
+
+        Spacer(modifier = Modifier.height(10.dp))
+
+        Button(onClick = {},
+            modifier = Modifier.fillMaxWidth(),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = colorResource(id = R.color.green_wordle),
+                contentColor = Color.White
+            )
+        ) {
+            Text("Leaderboard")
+        }
+    }
 
 }
