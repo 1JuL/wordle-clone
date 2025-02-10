@@ -1,4 +1,4 @@
-package com.example.wordle.presentation.screens
+package com.example.wordle.presentation.screens.game
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -14,10 +14,16 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -25,14 +31,30 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.wordle.R
+import com.example.wordle.presentation.components.OnScreenKeyboard
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun GameScreen() {
-    Scaffold { paddingValues ->
+fun GameScreen(onBack: () -> Unit) {
+    Scaffold (
+        topBar = {
+            TopAppBar(
+                title = {
+                    Text("Wordle")
+                },
+                navigationIcon = {
+                    IconButton(onClick = {
+                        onBack()
+                    }) {
+                        Icon(Icons.Filled.ArrowBack, contentDescription = "Back")
+                    }
+                }
+            )
+        }
+    ) { paddingValues ->
         Column(
             modifier = Modifier
                 .padding(paddingValues)
@@ -41,7 +63,7 @@ fun GameScreen() {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Top
         ) {
-            Spacer(modifier = Modifier.height(80.dp))
+            Spacer(modifier = Modifier.height(60.dp))
 
             WordGrid()
 
@@ -102,11 +124,8 @@ fun WordGrid() {
 
 @Composable
 fun Keyboard(){
-    Image(
-        painter = painterResource(id = R.drawable.keyboard_ex),
-        contentDescription = "Wordle Logo",
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(10.dp, vertical = 35.dp),
+    OnScreenKeyboard(
+        onKeyPressed = {},
+        onBackspace = {}
     )
 }

@@ -20,15 +20,19 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.tooling.preview.Preview
+import com.example.wordle.ui.theme.black_wordle
 
 @Composable
 
-fun HomeScreen(){
-    Scaffold { paddingValues ->
+fun HomeScreen(onPLayGame: () -> Unit, onScore: () -> Unit) {
+    Scaffold (
+        //containerColor = colorResource(id = R.color.black_wordle)
+    ){ paddingValues ->
         Column (modifier = Modifier.padding(paddingValues)) {
             LogoHeader()
             InfoBody()
-            Buttons()
+            Buttons(onPLayGame, onScore)
         }
 
     }
@@ -51,14 +55,14 @@ fun InfoBody(){
 }
 
 @Composable
-fun Buttons(){
+fun Buttons(onPLayGame: () -> Unit, onScore: () -> Unit){
     Column (
         modifier = Modifier
             .padding(40.dp)
             .fillMaxSize(),
         verticalArrangement = Arrangement.Bottom
     ){
-        Button(onClick = {},
+        Button(onClick = {onPLayGame()},
             modifier = Modifier.fillMaxWidth(),
             colors = ButtonDefaults.buttonColors(
                 containerColor = colorResource(id = R.color.green_wordle),
@@ -70,7 +74,7 @@ fun Buttons(){
 
         Spacer(modifier = Modifier.height(10.dp))
 
-        Button(onClick = {},
+        Button(onClick = {onScore()},
             modifier = Modifier.fillMaxWidth(),
             colors = ButtonDefaults.buttonColors(
                 containerColor = colorResource(id = R.color.green_wordle),
@@ -81,4 +85,9 @@ fun Buttons(){
         }
     }
 
+}
+@Composable
+@Preview
+fun PreviewHomeScreen(){
+    HomeScreen(onPLayGame = {}, onScore = {})
 }
