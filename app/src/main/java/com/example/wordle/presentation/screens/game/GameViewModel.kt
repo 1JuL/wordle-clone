@@ -4,32 +4,46 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import com.example.wordle.data.allWords
 
-class GameViewModel : ViewModel(){
-    var target by mutableStateOf("HAPPY")
+class GameViewModel : ViewModel() {
+    var target by mutableStateOf(getRandomWord())
         private set
-    var attempts by mutableStateOf(listOf<String>())
-        private set
+
     var currentAttempt by mutableStateOf("")
         private set
 
-    fun onSubmit(){
-        //Verificar si la palabra es correcta
-        //Verificar si no tiene mas intentos
-        //Agregar la palabra a la lista de intentos
-        // currentAttempt = ""
+    var attempts by mutableStateOf(listOf<String>())
+        private set
 
+    val gameOver: Boolean
+        get() = (attempts.isNotEmpty() && attempts.last() == target) || (attempts.size >= 6)
+
+    private fun getRandomWord(): String {
+        return allWords.random()
+    }
+    fun restartGame() {
+        target = getRandomWord()
+        currentAttempt = ""
+        attempts = emptyList()
     }
 
-    fun resetGame(){
-
+    fun onKeyPressed(letter: Char) {
+        if (!gameOver && currentAttempt.length < 5) {
+            currentAttempt += letter
+        }
     }
 
-    fun onKeyPressed(){
-
+    fun onBackspace() {
+        if (!gameOver && currentAttempt.isNotEmpty()) {
+            currentAttempt = currentAttempt.dropLast(1)
+        }
     }
 
-    fun onDelete(){
-
+    fun onSubmit() {
+        if (!gameOver && currentAttempt.length == 5) {
+            attempts = attempts + currentAttempt
+            currentAttempt = ""
+        }
     }
 }

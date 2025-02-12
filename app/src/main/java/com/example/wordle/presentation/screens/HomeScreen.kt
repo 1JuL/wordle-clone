@@ -21,13 +21,12 @@ import androidx.compose.material3.Text
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.wordle.ui.theme.black_wordle
 
 @Composable
 
 fun HomeScreen(onPLayGame: () -> Unit, onScore: () -> Unit) {
     Scaffold (
-        //containerColor = colorResource(id = R.color.black_wordle)
+        containerColor = colorResource(id = R.color.black_wordle)
     ){ paddingValues ->
         Column (modifier = Modifier.padding(paddingValues)) {
             LogoHeader()

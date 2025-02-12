@@ -10,6 +10,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -30,6 +31,7 @@ fun InfoBodyContent() {
             style = MaterialTheme.typography.titleLarge.copy(
                 fontFamily = FontFamily.Serif,
                 fontWeight = FontWeight.ExtraBold,
+                color = Color(0xFFFFFFFF),
                 letterSpacing = 0.5.sp
             ),
             modifier = Modifier.padding(bottom = 8.dp)
@@ -41,6 +43,7 @@ fun InfoBodyContent() {
             text = "Guess the Wordle in 6 tries",
             style = TextStyle(
                 fontWeight = FontWeight.SemiBold,
+                color = Color(0xFFFFFFFF),
                 fontSize = 16.sp,
             ),
             modifier = Modifier.fillMaxWidth()
@@ -53,6 +56,7 @@ fun InfoBodyContent() {
             style = TextStyle(
                 fontWeight = FontWeight.Normal,
                 fontSize = 16.sp,
+                color = Color(0xFFFFFFFF),
                 textAlign = TextAlign.Start
             ),
             modifier = Modifier.fillMaxWidth()
@@ -65,6 +69,7 @@ fun InfoBodyContent() {
             style = TextStyle(
                 fontWeight = FontWeight.Normal,
                 fontSize = 16.sp,
+                color = Color(0xFFFFFFFF),
             ),
             modifier = Modifier.fillMaxWidth()
         )
@@ -76,6 +81,7 @@ fun InfoBodyContent() {
             style = TextStyle(
                 fontWeight = FontWeight.SemiBold,
                 fontSize = 16.sp,
+                color = Color(0xFFFFFFFF),
             ),
             modifier = Modifier.fillMaxWidth()
         )
@@ -94,6 +100,7 @@ fun InfoBodyContent() {
             style = TextStyle(
                 fontWeight = FontWeight.Normal,
                 fontSize = 14.sp,
+                color = Color(0xFFFFFFFF),
             ),
             modifier = Modifier.fillMaxWidth()
         )
@@ -112,6 +119,7 @@ fun InfoBodyContent() {
             style = TextStyle(
                 fontWeight = FontWeight.Normal,
                 fontSize = 14.sp,
+                color = Color(0xFFFFFFFF),
             ),
             modifier = Modifier.fillMaxWidth()
         )
@@ -130,6 +138,7 @@ fun InfoBodyContent() {
             style = TextStyle(
                 fontWeight = FontWeight.Normal,
                 fontSize = 14.sp,
+                color = Color(0xFFFFFFFF),
             ),
             modifier = Modifier.fillMaxWidth()
         )
