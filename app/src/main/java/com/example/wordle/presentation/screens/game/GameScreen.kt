@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -29,10 +30,23 @@ import com.example.wordle.R
 import com.example.wordle.presentation.components.OnScreenKeyboard
 import com.example.wordle.presentation.components.WordBox
 import androidx.compose.material.icons.sharp.Refresh
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.TextButton
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.ui.graphics.vector.ImageVector
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun GameScreen(onBack: () -> Unit, viewModel: GameViewModel = viewModel()) {
+
+    val openAlertDialog = remember { mutableStateOf(false) }
+
+    if (viewModel.gameOver) {
+        openAlertDialog.value = true
+    }
+
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -43,7 +57,7 @@ fun GameScreen(onBack: () -> Unit, viewModel: GameViewModel = viewModel()) {
                     }
                 },
                 actions = {
-                    IconButton(onClick = { viewModel.restartGame() }) {
+                    IconButton(onClick = { viewModel.restart() }) {
                         Icon(Icons.Sharp.Refresh, contentDescription = "Replay")
                     }
 
@@ -88,6 +102,20 @@ fun GameScreen(onBack: () -> Unit, viewModel: GameViewModel = viewModel()) {
                 Text("Submit")
             }
         }
+    }
+
+    // AlertDialog se muestra aquí si openAlertDialog es true
+    if (openAlertDialog.value) {
+        AlertDialogExample(
+            onDismissRequest = { openAlertDialog.value = false },
+            onConfirmation = {
+                openAlertDialog.value = false
+                println("Confirmation registered")
+            },
+            dialogTitle = "You Lost!",
+            dialogText = "Better Luck Next Time!",
+            icon = Icons.Default.Info
+        )
     }
 }
 
@@ -143,4 +171,46 @@ fun WordGrid(
             WordBox(word = word, colors = colors)
         }
     }
+}
+
+@Composable
+fun AlertDialogExample(
+    onDismissRequest: () -> Unit,
+    onConfirmation: () -> Unit,
+    dialogTitle: String,
+    dialogText: String,
+    icon: ImageVector,
+) {
+    AlertDialog(
+        icon = {
+            Icon(icon, contentDescription = "Example Icon")
+        },
+        title = {
+            Text(text = dialogTitle)
+        },
+        text = {
+            Text(text = dialogText)
+        },
+        onDismissRequest = {
+            onDismissRequest()
+        },
+        confirmButton = {
+            TextButton(
+                onClick = {
+                    onConfirmation()
+                }
+            ) {
+                Text("Confirm")
+            }
+        },
+        dismissButton = {
+            TextButton(
+                onClick = {
+                    onDismissRequest()
+                }
+            ) {
+                Text("Dismiss")
+            }
+        }
+    )
 }

@@ -22,7 +22,7 @@ class GameViewModel : ViewModel() {
     private fun getRandomWord(): String {
         return allWords.random()
     }
-    fun restartGame() {
+    fun restart() {
         target = getRandomWord()
         currentAttempt = ""
         attempts = emptyList()
