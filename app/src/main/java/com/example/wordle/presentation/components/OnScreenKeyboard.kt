@@ -13,6 +13,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -53,9 +55,12 @@ fun KeyboardKey(label: String, onClick: () -> Unit) {
     Button(
         onClick = onClick,
         colors = ButtonDefaults.buttonColors(
+            containerColor = Color(0xFFBFE8FF),
+            contentColor = Color.Black
         ),
+        shape = RectangleShape,
         modifier = Modifier.width(35.dp),
-        contentPadding = PaddingValues(0.dp) // Remove default padding
+        contentPadding = PaddingValues(0.dp)
 
     ) {
         Text(text = label, fontSize = 16.sp, modifier = Modifier.padding(0.dp))

@@ -19,6 +19,10 @@ class GameViewModel : ViewModel() {
     val gameOver: Boolean
         get() = (attempts.isNotEmpty() && attempts.last() == target) || (attempts.size >= 6)
 
+    val gameWon: Boolean
+        get() = (attempts.isNotEmpty() && attempts.last() == target)
+
+
     private fun getRandomWord(): String {
         return allWords.random()
     }

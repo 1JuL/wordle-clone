@@ -1,5 +1,6 @@
 package com.example.wordle.presentation.screens.game
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -8,9 +9,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -31,21 +32,24 @@ import com.example.wordle.presentation.components.OnScreenKeyboard
 import com.example.wordle.presentation.components.WordBox
 import androidx.compose.material.icons.sharp.Refresh
 import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.ui.graphics.vector.ImageVector
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun GameScreen(onBack: () -> Unit, viewModel: GameViewModel = viewModel()) {
 
     val openAlertDialog = remember { mutableStateOf(false) }
+    val gameWon = remember { mutableStateOf(false) }
 
-    if (viewModel.gameOver) {
-        openAlertDialog.value = true
+    if (openAlertDialog.value) {
+        AlertDialog(
+            onDismissRequest = { openAlertDialog.value = false },
+            viewModel = viewModel,
+            dialogTitle = if (gameWon.value) "Congratulations!" else "You Lost!",
+            dialogText = if (gameWon.value) "You Won!" else "Better Luck Next Time!"
+        )
     }
-
 
     Scaffold(
         topBar = {
@@ -92,7 +96,16 @@ fun GameScreen(onBack: () -> Unit, viewModel: GameViewModel = viewModel()) {
             Spacer(modifier = Modifier.height(20.dp))
 
             Button(
-                onClick = { viewModel.onSubmit() },
+                onClick = {
+                    viewModel.onSubmit()
+                    if (viewModel.gameWon) {
+                        gameWon.value = true
+                        openAlertDialog.value = true
+                    } else if (viewModel.gameOver) {
+                        gameWon.value = false
+                        openAlertDialog.value = true
+                    }
+                },
                 modifier = Modifier.width(350.dp),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = colorResource(id = R.color.green_wordle),
@@ -102,20 +115,6 @@ fun GameScreen(onBack: () -> Unit, viewModel: GameViewModel = viewModel()) {
                 Text("Submit")
             }
         }
-    }
-
-    // AlertDialog se muestra aquí si openAlertDialog es true
-    if (openAlertDialog.value) {
-        AlertDialogExample(
-            onDismissRequest = { openAlertDialog.value = false },
-            onConfirmation = {
-                openAlertDialog.value = false
-                println("Confirmation registered")
-            },
-            dialogTitle = "You Lost!",
-            dialogText = "Better Luck Next Time!",
-            icon = Icons.Default.Info
-        )
     }
 }
 
@@ -174,17 +173,13 @@ fun WordGrid(
 }
 
 @Composable
-fun AlertDialogExample(
+fun AlertDialog(
     onDismissRequest: () -> Unit,
-    onConfirmation: () -> Unit,
+    viewModel: GameViewModel,
     dialogTitle: String,
     dialogText: String,
-    icon: ImageVector,
 ) {
     AlertDialog(
-        icon = {
-            Icon(icon, contentDescription = "Example Icon")
-        },
         title = {
             Text(text = dialogTitle)
         },
@@ -195,21 +190,19 @@ fun AlertDialogExample(
             onDismissRequest()
         },
         confirmButton = {
-            TextButton(
+            Button(
                 onClick = {
-                    onConfirmation()
-                }
-            ) {
-                Text("Confirm")
-            }
-        },
-        dismissButton = {
-            TextButton(
-                onClick = {
+                    viewModel.restart()
                     onDismissRequest()
-                }
+                },
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color(0xFFBFE8FF),
+                    contentColor = Color.Black
+                ),
+                border = BorderStroke(2.dp, Color.White),
+                shape = RoundedCornerShape(8.dp)
             ) {
-                Text("Dismiss")
+                Text("Restart")
             }
         }
     )
