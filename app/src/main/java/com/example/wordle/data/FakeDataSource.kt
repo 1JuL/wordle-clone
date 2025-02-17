@@ -1,6 +1,5 @@
 package com.example.wordle.data
 
-// Set with all the words for the Game
 val allWords: Set<String> =
     setOf(
         "ARISE", "APPLE", "BENCH", "BRAVE", "CHARM", "CHESS", "CLEAR", "DANCE", "DODGE",
